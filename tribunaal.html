@@ -1,24 +1,3 @@
-<!--
-	"Feather 2.0"
-	http://www.tumblr.com/theme/36403
-
-	Light as feather
-	An extremely simple design that's made to showcase your content.
-
-	Features:
-
-	High-Res photos/wider column (Optional)
-	Larger fonts (Optional)
-	Social Links (Optional)
-	Custom background color/text color/link color etc.
-
-	By default, the High-Res and Larger fonts are disabled. Enable in customize. Website Link must include "http://".
-
-	by Eric Hu
-	http://erichu.tumblr.com/
-	http://ericpaints.it/
- -->
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -35,9 +14,9 @@
 <link rel="apple-touch-icon" href="{PortraitURL-128}"></link>
 
 <meta name="text:Google Analytics ID" content="" />
-<meta name="text:Twitter Name" content="" />
+<meta name="text:Twitter Name" content="tribunaal" />
 <meta name="text:Flickr Name" content="" />
-<meta name="text:Facebook Name" content="" />
+<meta name="text:Facebook Name" content="tribunaal" />
 <meta name="text:Website Name" content="" />
 <meta name="text:Website Link" content="" />
 <meta name="text:Youtube Name" content="" />
@@ -59,6 +38,12 @@
 <meta name="color:Postmeta Hover" content="#333"/>
 
 <link rel="stylesheet" href="http://static.tumblr.com/anfpypi/cp4mbbi94/feather_2.0_min.css" />
+<link rel="stylesheet" href="http://static.tumblr.com/ezf6yac/Kujn1yl5j/liteaccordion.css" />
+<link rel="stylesheet" href="http://static.tumblr.com/ezf6yac/EMwn1yl4d/tribunaal.js" />
+ <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+
+
+
 
 
 <style type="text/css" media="screen">
@@ -219,12 +204,72 @@
     sub { 
 	    bottom: -0.25em; 
     }
+
+    
+    .footnotes {
+        font-size:12px;
+    }
+    
+     .footnotes > ol > li > p {
+         line-height:14px;
+     }
+    
+    
+    .liteAccordion .slide > div {
+        padding-top:10px; 
+        padding-right:30px; 
+        padding-bottom:10px;
+        padding-left:80px !important;
+        overflow-y:visible;
+        background-color:white;
+    }
+    
+    .liteAccordion .slide > h2 {
+        /*background: none repeat scroll 0% 0% white !important;*/
+        border-style: dashed !important;
+        border-width: 1px;
+        border-color: #BBB;
+        color:black !important;
+        text-transform: uppercase;
+    }
+    
+    .liteAccordion .slide > h2:hover {
+        background-color:#DDD;
+    }
+    
+    .social-buttons {
+        padding-top:3em;
+        padding-bottom:3em;
+        
+        width:300px;
+    }
 	
+	.twitter-button {
+	    float:left;
+	}
+	
+	.fb-like {
+	    float:right;
+	}
+	
+	.fb-comments-container {
+	    clear:both;   
+	}
 	
 </style>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="http://static.tumblr.com/ezf6yac/ouan1yl46/liteaccordion.jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
 {block:IfHighRes}
 <script type="text/javascript">
@@ -565,9 +610,19 @@ $(function() {
 
 {/block:Posts}
     {block:PermalinkPage}
-    <a name="fb-comments"><h3>Reacties:</h3></a>
-    <div class="fb-comments" data-href="{Permalink}" data-numposts="20" data-colorscheme="light"></div>
-    <!--<div class="fb-comments" data-href="http://tribunaal.be" data-numposts="10" data-colorscheme="light"></div>-->
+    <div class="social-buttons">
+    <div class="twitter-button">
+    <a href="https://twitter.com/share" class="twitter-share-button" data-lang="nl">Tweeten</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></div>
+    
+    <div class="fb-like" data-href="{Permalink}" data-layout="button_count" data-action="recommend" data-show-faces="true" data-share="true"></div>
+    
+    </div>
+    
+    <div class="fb-comments-container"
+        <a name="fb-comments"><h3>Reacties:</h3></a>
+        <div class="fb-comments" data-href="{Permalink}" data-numposts="20" data-colorscheme="light"></div>
+    </div>
     {block:PermalinkPage}
 
 {block:Pagination}
@@ -637,6 +692,118 @@ $(function() {
             //]]>
         </script>
     {/block:IfDisqusShortname}
+
+
+<script>
+$(document).ready(function () {
+
+    // ACCORDIONS
+
+    var accIdx = 1; // what accordion are we on?
+    $('.accordion').each(function (i, DOMEl) { // loop over each accordion.
+        var maxHeight = 0;
+        var slideIdx = 1;
+
+        var nrOfSlides = $(this).find("ol > li ").length
+
+
+
+        // the height of the accordion should be, in the best case, the height of
+        // the longest part, but we'll have to add lower and upper bounds to that
+        $(this).find('div').each(function (j) {
+            var h = $(this).height()
+            if (maxHeight < h) {
+                maxHeight = h;
+            }
+        });
+        
+        var slideHeight;
+        if (maxHeight > 750) {
+            slideHeight = 750;
+        } else if (maxHeight < 350) {
+            slideHeight = 350
+        } else {
+            slideHeight = maxHeight;
+        }
+    
+        
+        // liteAccordion flips out if you initialize multiple accordions at once, 
+        // so we add a unique id to each and initialize them seperately with that.
+        var idVal = 'accordion' + accIdx
+        $(this).attr('id', idVal);
+        $('#' + idVal).liteAccordion({
+            containerWidth: $('#container').width(),
+            containerHeight: slideHeight
+        });
+        accIdx++;
+
+
+        // liteAccordion's linkable option doesn't work, we'll roll our own.
+        // It's not that complicated:
+        var hash = window.location.hash; // we get the hash from the url
+        if (hash != "") { // proceed only if it's present
+            var slideIdx = 1
+
+            slideToSelect = parseInt(hash.substr(1)); // make a number out of it
+
+            if (slideToSelect <= nrOfSlides) { // this mostly to prevent 
+                // stuff like #10000 hanging the page
+                while (slideIdx < slideToSelect) { //and while we're not there yet, 
+                    $("#" + idVal).liteAccordion("next"); // we go to the next one.
+                    slideIdx++;
+                }
+            }
+        } // et voila!
+    });
+
+
+    // determine the browser
+    // this is a pretty hacky way, but makes everything so much easier...
+    var browserType = "";
+    for (var prop in $.browser) {
+        if (prop == "mozilla") {
+            browserType = "mozilla";
+        } else if (prop == "webkit") {
+            browserType = "webkit";
+        } else if (prop == "msie") {
+            browserType = "msie";
+        } else if (prop == "opera") {
+            browserType = "opera";
+        }
+    }
+
+
+    // for some reason the width in webkit doesn't mean the same as in gecko, 
+    // i think (and this is speculation) that in gecko the width of the accordion 
+    // is the entire thing and in webkit it's the slide withtout the title 
+    // thingie you click
+    if (browserType == "webkit") {
+        $('.slide > div').css('width', '475px');
+        $('.slide > div').css('padding-left', '80px', 'important');
+    }
+
+
+    // we have to do it like this because we can't change it anyway else...    
+    $('.slide > h2').css('background-color', 'white')
+
+    // color the titles when hovering.
+    $('.slide > h2').hover(
+        function () {
+            $(this).animate({
+                backgroundColor: "#EDEDED"
+            }, 100)
+        },
+        function () {
+            $(this).animate({
+                backgroundColor: "#FFFFFF"
+            }, 100)
+        });
+
+});
+
+
+
+</script>
 
 
 </body>
